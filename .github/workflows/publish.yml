@@ -21,4 +21,4 @@ jobs:
               uses: docker/build-push-action@v5
               with:
                 push: true
-                tags: f-eighty7/database_examination_lab/app:latest
+                tags: f-eighty7/f-eighty7/devops_midterm_examination_project/app:latest
