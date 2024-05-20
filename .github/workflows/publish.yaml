@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
     push:
       branches:
-        - main
+        - mai
 
 jobs:
     build-and-push:
@@ -16,9 +16,11 @@ jobs:
                 registry: ghcr.io
                 username: ${{github.actor}}
                 password: ${{ secrets.GITHUB_TOKEN }}
-            
-            - name: Build and push
-              uses: docker/build-push-action@v5
-              with:
-                push: true
-                tags: f-eighty7/f-eighty7/devops_midterm_examination_project/app:latest
+
+            - name: Build Docker image
+              run: |
+                docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/gitea:${{ github.sha }} .
+
+            - name: Push Docker image
+              run: |
+                docker push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/gitea:${{ github.sha }}
