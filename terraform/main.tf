@@ -2,7 +2,15 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.104.2"
+      version = "~>3.0"
+    }
+  }
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "ak-gitea"
+
+    workspaces {
+      name = "gitea"
     }
   }
 }
@@ -104,7 +112,7 @@ resource "azurerm_linux_virtual_machine" "gitea_vm" {
 
   admin_ssh_key {
     username   = "ak"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = file("~/.ssh/gitea.pub")
   }
 
   os_disk {
