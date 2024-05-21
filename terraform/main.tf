@@ -127,5 +127,5 @@ resource "azurerm_linux_virtual_machine" "gitea_vm" {
     version   = "latest"
   }
 
-  custom_data = base64encode(file("terraform/cloud-init.yaml"))
+  custom_data = base64encode(file("./terraform/cloud-init.yaml"))
 }
