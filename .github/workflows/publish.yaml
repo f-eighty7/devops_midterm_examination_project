@@ -10,9 +10,8 @@ jobs:
     build-and-push:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
+            
+      
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v3
               with:
@@ -22,9 +21,5 @@ jobs:
 
             - name: Build and Push Docker image to Package Registry
               run: |
-                REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-                DOCKER_IMAGE=ghcr.io/$REPO_NAME:${{ github.sha }}
-                docker build -t $DOCKER_IMAGE .
-                docker tag $DOCKER_IMAGE ghcr.io/$REPO_NAME:latest
-                docker push $DOCKER_IMAGE
-                docker push ghcr.io/$REPO_NAME:latest
+                docker build . --tag ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+                docker push ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
