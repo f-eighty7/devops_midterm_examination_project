@@ -23,4 +23,4 @@ jobs:
             - name: Push Docker image to Package Registry
               run: |
                 docker tag ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/gitea:${{ github.sha }} docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
-                sdocker push docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
+                docker push docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
