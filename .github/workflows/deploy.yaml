@@ -10,6 +10,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
     - name: Azure Login
       run: |
         export ARM_CLIENT_ID="${{ secrets.ARM_CLIENT_ID }}"
@@ -22,6 +23,7 @@ jobs:
         AZURE_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         AZURE_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v3
 
