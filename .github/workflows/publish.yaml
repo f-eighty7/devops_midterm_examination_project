@@ -21,5 +21,5 @@ jobs:
 
             - name: Build and Push Docker image to Package Registry
               run: |
-                docker build . --tag ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+                docker build . --tag ghcr.io/f-eighty7/devops_midterm_examination_project/
                 docker push ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
