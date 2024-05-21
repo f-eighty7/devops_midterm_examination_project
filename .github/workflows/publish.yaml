@@ -29,3 +29,12 @@ jobs:
                 docker push $DOCKER_IMAGE
                 docker push ghcr.io/$REPO_NAME/gitea:latest
                 echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
+            
+            - name: Set Docker image name
+              run: echo "${{ env.DOCKER_IMAGE }}" > DOCKER_IMAGE.txt
+                
+            - name: Archive Docker image name
+              uses: actions/upload-artifact@v4
+              with:
+                name: docker-image
+                path: DOCKER_IMAGE.tx
