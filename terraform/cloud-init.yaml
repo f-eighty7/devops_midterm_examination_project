@@ -1,0 +1,52 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+  - docker-compose
+
+runcmd:
+  - systemctl start docker
+  - systemctl enable docker
+  - mkdir -p /srv/gitea
+  - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - chmod +x /usr/local/bin/docker-compose
+  - |
+    cat <<EOF > /srv/gitea/docker-compose.yml
+    version: '3'
+
+    services:
+      db:
+        image: mysql:8.0
+        container_name: gitea_db
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: example
+          MYSQL_DATABASE: gitea
+          MYSQL_USER: gitea
+          MYSQL_PASSWORD: gitea
+        volumes:
+          - db_data:/var/lib/mysql
+
+      gitea:
+        image: ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+        container_name: gitea
+        restart: always
+        ports:
+          - "3000:3000"
+          - "222:22"
+        environment:
+          - USER_UID=1000
+          - USER_GID=1000
+          - DB_TYPE=mysql
+          - DB_HOST=db:3306
+          - DB_NAME=gitea
+          - DB_USER=gitea
+          - DB_PASSWD=gitea
+        volumes:
+          - gitea_data:/data
+
+    volumes:
+      db_data:
+      gitea_data:
+    EOF
