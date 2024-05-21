@@ -20,21 +20,7 @@ jobs:
                 username: ${{github.actor}}
                 password: ${{ secrets.DOCKER_TOKEN }}
 
-            - name: Build and Push Docker image to Package Registry
+            - name: Push Docker image to Package Registry
               run: |
-                REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-                DOCKER_IMAGE=ghcr.io/$REPO_NAME/gitea:${{ github.sha }}
-                docker build -t $DOCKER_IMAGE .
-                docker tag $DOCKER_IMAGE ghcr.io/$REPO_NAME/gitea:latest
-                docker push $DOCKER_IMAGE
-                docker push ghcr.io/$REPO_NAME/gitea:latest
-                echo "DOCKER_IMAGE=$DOCKER_IMAGE" >> $GITHUB_ENV
-            
-            - name: Set Docker image name
-              run: echo "${{ env.DOCKER_IMAGE }}" > DOCKER_IMAGE.txt
-                
-            - name: Archive Docker image name
-              uses: actions/upload-artifact@v4
-              with:
-                name: docker-image
-                path: DOCKER_IMAGE.tx
+                docker tag ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/gitea:${{ github.sha }} docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
+                docker push docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
