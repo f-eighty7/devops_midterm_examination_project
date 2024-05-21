@@ -21,8 +21,9 @@ jobs:
 
             - name: Build and Push Docker image to Package Registry
               run: |
-                - name: Push Docker image to Package Registry
-                run: |
-                  docker tag ghcr.io/${{ github.repository_owner }}/${{ github.repository }}/gitea:${{ github.sha }} docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
-                  docker push docker.pkg.github.com/${{ github.repository }}/${{ github.event_name }}/gitea:${{ github.sha }}
-            
+                REPO_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+                DOCKER_IMAGE=ghcr.io/$REPO_NAME/gitea:${{ github.sha }}
+                docker build -t $DOCKER_IMAGE .
+                docker tag $DOCKER_IMAGE ghcr.io/$REPO_NAME/gitea:latest
+                docker push $DOCKER_IMAGE
+                docker push ghcr.io/$REPO_NAME/gitea:latest
