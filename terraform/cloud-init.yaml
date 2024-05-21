@@ -50,3 +50,4 @@ runcmd:
       db_data:
       gitea_data:
     EOF
+  - docker-compose -f /srv/gitea/docker-compose.yml up -d
