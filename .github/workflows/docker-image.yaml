@@ -1,4 +1,4 @@
-name: Deploy Gitea
+name: Build and Push Docker Image Gitea
 
 on:
   workflow_dispatch:
