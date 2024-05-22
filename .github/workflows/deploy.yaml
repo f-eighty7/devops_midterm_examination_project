@@ -32,7 +32,7 @@ jobs:
 
     - name: Terraform Init
       run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
-      working-directory: terraform,
+      working-directory: terraform
 
     - name: Check if Public IP Exists
       id: check_ip
