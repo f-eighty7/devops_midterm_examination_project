@@ -43,6 +43,10 @@ resource "azurerm_public_ip" "gitea_pip" {
   location            = azurerm_resource_group.gitea_rg.location
   resource_group_name = azurerm_resource_group.gitea_rg.name
   allocation_method   = "Static"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_network_interface" "gitea_nic" {
@@ -55,6 +59,10 @@ resource "azurerm_network_interface" "gitea_nic" {
     subnet_id                     = azurerm_subnet.gitea_subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.gitea_pip.id
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
