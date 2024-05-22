@@ -1,6 +1,4 @@
-FROM ubuntu:20.04
-
-ENV DEBIAN_FRONTEND=noninteractive
+FROM ubuntu:20.04ex
 
 RUN apt-get update && \
     apt-get install -y wget git sqlite3 && \
@@ -19,20 +17,21 @@ RUN adduser \
     --gecos 'Git Version Control' \
     --group \
     --disabled-password \
-    --home /home/ak \
-    ak
+    --home /home/git \
+    git
 
 RUN mkdir -p /var/lib/gitea/{custom,data,log} && \
-    chown -R ak:ak /var/lib/gitea/ && \
+    chown -R git:git /var/lib/gitea/ && \
     chmod -R 750 /var/lib/gitea/ && \
     mkdir /etc/gitea && \
-    chown root:ak /etc/gitea && \
+    chown root:git /etc/gitea && \
     chmod 770 /etc/gitea
 
 COPY app.ini /etc/gitea/app.ini
+RUN chmod 644 /etc/gitea/app.ini
 
-USER ak
+USER git
 
 WORKDIR /var/lib/gitea
 
-CMD ["gitea", "web", "-c", "/etc/gitea/app.ini"]
+CMD ["su", "git", "-c", "gitea web -c /etc/gitea/app.ini"]
