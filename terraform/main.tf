@@ -129,6 +129,7 @@ resource "azurerm_linux_virtual_machine" "gitea_vm" {
   }
 
   custom_data = base64encode(<<EOF
+#cloud-config
 package_update: true
 package_upgrade: true
 packages:
