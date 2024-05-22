@@ -5,14 +5,14 @@ terraform {
       version = "~>3.0"
     }
   }
-  #backend "remote" {
-  # hostname     = "app.terraform.io"
-  #organization = "ak-gitea"
+  backend "remote" {
+   hostname     = "app.terraform.io"
+  organization = "ak-gitea"
 
-  #workspaces {
-  #name = "gitea"
-  #}
-  #}
+  workspaces {
+  name = "gitea"
+    }
+  }
 }
 
 provider "azurerm" {
@@ -42,7 +42,7 @@ resource "azurerm_public_ip" "gitea_pip" {
   name                = "gitea-public-ip"
   location            = azurerm_resource_group.gitea_rg.location
   resource_group_name = azurerm_resource_group.gitea_rg.name
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "gitea_nic" {
@@ -139,7 +139,7 @@ runcmd:
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+  - docker run -d --name gitea -p 3000:3000 -p 222:22 -e ROOT_URL=https://ahin.chas.dsnw.dev ghcr.io/f-eighty7/   devops_midterm_examination_project/gitea:latest
 EOF
-  )
+)
 }
