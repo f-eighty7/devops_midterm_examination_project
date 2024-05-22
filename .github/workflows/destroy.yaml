@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.destroy == 'true' }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Azure Login
         run: |
           export ARM_CLIENT_ID="${{ secrets.ARM_CLIENT_ID }}"
