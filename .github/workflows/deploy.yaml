@@ -46,5 +46,5 @@ jobs:
         ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      run: terraform apply -auto-approve -state=terraform.tfstate
+      run: terraform apply -auto-approve -state=sv-7sBiFz9dSuyYtQof.tfstate
       working-directory: terraform
