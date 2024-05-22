@@ -28,7 +28,6 @@ RUN mkdir -p /var/lib/gitea/{custom,data,log,repositories} && \
     chmod 770 /etc/gitea
 
 COPY app.ini /etc/gitea/app.ini
-RUN chmod 644 /etc/gitea/app.ini
 
 USER git
 
