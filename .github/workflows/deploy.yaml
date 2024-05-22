@@ -34,11 +34,16 @@ jobs:
       run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
       working-directory: terraform 
     
+    - name: Download Terraform state
+      run: |
+        curl -o terraform.tfstate "https://app.terraform.io/api/state-versions/sv-RgsPS3bg2PnRr3Bf/hosted_state"
+      if: always()
+
     - name: Apply Terraform configuration
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -state=terraform.tfstate
       working-directory: terraform
