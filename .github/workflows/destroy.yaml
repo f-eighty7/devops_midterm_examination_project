@@ -25,6 +25,11 @@ jobs:
           
       - name: Create SSH directory if not exists
         run: mkdir -p $HOME/.ssh
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > $HOME/.ssh/gitea.pub
+        shell: bash
     
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
