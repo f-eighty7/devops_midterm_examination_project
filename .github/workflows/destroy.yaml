@@ -34,5 +34,5 @@ jobs:
         working-directory: terraform
 
       - name: Terraform Destroy VM and NIC
-        run: terraform destroy -target=azurerm_linux_virtual_machine.gitea_vm -target=azurerm_network_interface.gitea_nic -auto-approve
+        run: terraform destroy -target=azurerm_linux_virtual_machine.gitea_vm -auto-approve
         working-directory: terraform
