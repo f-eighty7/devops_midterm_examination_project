@@ -36,11 +36,3 @@ jobs:
       - name: Terraform Destroy VM and NIC
         run: terraform destroy -target=azurerm_linux_virtual_machine.gitea_vm -target=azurerm_network_interface.gitea_nic -auto-approve
         working-directory: terraform
-
-      - name: Terraform Destroy Network and Subnet
-        run: terraform destroy -target=azurerm_subnet.gitea_subnet -target=azurerm_virtual_network.gitea_vnet -auto-approve
-        working-directory: terraform
-
-      - name: Terraform Destroy Resource Group
-        run: terraform destroy -target=azurerm_resource_group.gitea_rg -auto-approve
-        working-directory: terraform
