@@ -25,7 +25,7 @@ RUN adduser \
 
 RUN mkdir -p /var/lib/gitea/data && \
     chown -R git:git /var/lib/gitea/data && \
-    chmod -R 750 /var/lib/gitea/data&& \
+    chmod -R 750 /var/lib/gitea/data && \
     mkdir /etc/gitea && \
     chown root:git /etc/gitea && \
     chmod 770 /etc/gitea
