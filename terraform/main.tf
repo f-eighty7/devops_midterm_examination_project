@@ -6,11 +6,11 @@ terraform {
     }
   }
   backend "remote" {
-   hostname     = "app.terraform.io"
-  organization = "ak-gitea"
+    hostname     = "app.terraform.io"
+    organization = "ak-gitea"
 
-  workspaces {
-  name = "gitea"
+    workspaces {
+      name = "gitea"
     }
   }
 }
@@ -43,10 +43,6 @@ resource "azurerm_public_ip" "gitea_pip" {
   location            = azurerm_resource_group.gitea_rg.location
   resource_group_name = azurerm_resource_group.gitea_rg.name
   allocation_method   = "Static"
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "azurerm_network_interface" "gitea_nic" {
@@ -59,10 +55,6 @@ resource "azurerm_network_interface" "gitea_nic" {
     subnet_id                     = azurerm_subnet.gitea_subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.gitea_pip.id
-  }
-  
-  lifecycle {
-    prevent_destroy = true
   }
 }
 
@@ -182,5 +174,5 @@ runcmd:
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
   - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
 EOF
-)
+  )
 }
