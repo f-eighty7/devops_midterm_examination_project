@@ -33,11 +33,6 @@ jobs:
     - name: Terraform Init
       run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
       working-directory: terraform 
-
-    - name: Import Public IP to State
-      run: terraform import azurerm_public_ip.gitea_pip /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Network/publicIPAddresses/<public_ip_name>
-      working-directory: terraform
-      ignore_errors: true
     
     - name: Apply Terraform configuration
       env:
