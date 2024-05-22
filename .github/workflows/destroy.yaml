@@ -26,11 +26,6 @@ jobs:
       - name: Create SSH directory if not exists
         run: mkdir -p $HOME/.ssh
     
-      - name: Set up SSH key
-        run: |
-            echo "${{ secrets.SSH_PUBLIC_KEY }}" > $HOME/.ssh/gitea.pub
-        shell: bash
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -38,7 +33,14 @@ jobs:
         run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
         working-directory: terraform
 
-      - name: Terraform Destroy
-        run: |
-          terraform destroy -auto-approve
+      - name: Terraform Destroy VM and NIC
+        run: terraform destroy -target=azurerm_linux_virtual_machine.gitea_vm -target=azurerm_network_interface.gitea_nic -auto-approve
+        working-directory: terraform
+
+      - name: Terraform Destroy Network and Subnet
+        run: terraform destroy -target=azurerm_subnet.gitea_subnet -target=azurerm_virtual_network.gitea_vnet -auto-approve
+        working-directory: terraform
+
+      - name: Terraform Destroy Resource Group
+        run: terraform destroy -target=azurerm_resource_group.gitea_rg -auto-approve
         working-directory: terraform
