@@ -32,7 +32,27 @@ jobs:
 
     - name: Terraform Init
       run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
-      working-directory: terraform
+      working-directory: terraform,
+
+    - name: Check if Public IP Exists
+      id: check_ip
+      run: |
+        ip_id=$(az network public-ip show --name <public_ip_name> --resource-group <resource_group_name> --subscription <subscription_id> --query id -o tsv || echo "not_found")
+        echo "::set-output name=ip_id::$ip_id"
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+    - name: Import Public IP to State
+      run: |
+        if terraform state show azurerm_public_ip.gitea_pip &> /dev/null; then
+          terraform import azurerm_public_ip.gitea_pip /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Network/publicIPAddresses/<public_ip_name>
+        else
+          echo "Public IP resource not found in state. Skipping import."
+        fi
+        working-directory: terraform
 
     - name: Apply Terraform configuration
       env:
