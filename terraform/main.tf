@@ -129,17 +129,50 @@ resource "azurerm_linux_virtual_machine" "gitea_vm" {
   }
 
   custom_data = base64encode(<<EOF
-#cloud-config
 package_update: true
 package_upgrade: true
 packages:
   - docker.io
+  - nginx
+  - curl
+
+write_files:
+  - path: /etc/nginx/sites-available/gitea
+    content: |
+      server {
+          listen 80;
+          server_name ahin.chas.dsnw.dev;
+
+          location / {
+              proxy_pass http://localhost:3000;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+          }
+      }
+
+  - path: /etc/nginx/sites-enabled/gitea
+    content: |
+      ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/
 
 runcmd:
+  - systemctl restart nginx
+
+  # Install acme.sh and obtain SSL certificate
+  - curl https://get.acme.sh | sh
+  - /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
+  - /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+      --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
+      --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
+      --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
+      --reloadcmd "systemctl restart nginx"
+
+  # Start Docker and run Gitea container
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 3000:3000 -p 222:22 -e ROOT_URL=https://ahin.chas.dsnw.dev ghcr.io/f-eighty7/   devops_midterm_examination_project/gitea:latest
+  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
 EOF
 )
 }
