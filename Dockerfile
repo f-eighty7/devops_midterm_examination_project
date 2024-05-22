@@ -20,9 +20,9 @@ RUN adduser \
     --home /home/git \
     git
 
-RUN mkdir -p /var/lib/gitea/{custom,data,log,repositories} && \
-    chown -R git:git /var/lib/gitea/ && \
-    chmod -R 750 /var/lib/gitea/ && \
+RUN mkdir -p /usr/local/bin/gitea/{custom,data,log,repositories} && \
+    chown -R git:git /usr/local/bin/gitea/ && \
+    chmod -R 750 /usr/local/bin/gitea/ && \
     mkdir /etc/gitea && \
     chown root:git /etc/gitea && \
     chmod 770 /etc/gitea
