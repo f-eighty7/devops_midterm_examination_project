@@ -5,14 +5,14 @@ terraform {
       version = "~>3.0"
     }
   }
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "ak-gitea"
+  #backend "remote" {
+  # hostname     = "app.terraform.io"
+  #organization = "ak-gitea"
 
-    workspaces {
-      name = "gitea"
-    }
-  }
+  #workspaces {
+  #name = "gitea"
+  #}
+  #}
 }
 
 provider "azurerm" {
@@ -88,18 +88,6 @@ resource "azurerm_network_security_group" "gitea_sg" {
   }
 
   security_rule {
-    name                       = "HTTPS"
-    priority                   = 102
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-
-security_rule {
     name                       = "Gitea"
     priority                   = 103
     direction                  = "Inbound"
@@ -110,7 +98,7 @@ security_rule {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
 
-    }
+  }
 }
 
 resource "azurerm_linux_virtual_machine" "gitea_vm" {
@@ -140,5 +128,18 @@ resource "azurerm_linux_virtual_machine" "gitea_vm" {
     version   = "latest"
   }
 
-  custom_data = base64encode(file("cloud-init.yaml"))
+  custom_data = base64encode(<<EOF
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+
+runcmd:
+  - systemctl start docker
+  - systemctl enable docker
+  - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+EOF
+)
 }
