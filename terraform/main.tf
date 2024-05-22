@@ -43,10 +43,6 @@ resource "azurerm_public_ip" "gitea_pip" {
   location            = azurerm_resource_group.gitea_rg.location
   resource_group_name = azurerm_resource_group.gitea_rg.name
   allocation_method   = "Static"
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "azurerm_network_interface" "gitea_nic" {
