@@ -5,8 +5,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN wget -O gitea https://dl.gitea.io/gitea/1.22/gitea-1.22-linux-amd64 && \
-    chmod +x gitea
+RUN wget -O /usr/local/bin/gitea https://dl.gitea.io/gitea/1.22/gitea-1.22-linux-amd64 && \
+    chmod +x /usr/local/bin/gitea
 
 RUN adduser \
     --system \
