@@ -34,17 +34,13 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Remove Public IP from State
-        run: terraform state rm azurerm_public_ip.gitea_pip
-        working-directory: terraform
-
       - name: Terraform Init
         run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
         working-directory: terraform
 
-      - name: Remove Public IP from State
-        run: terraform state rm azurerm_public_ip.gitea_pip
-        working-directory: terraform
+      #- name: Remove Public IP from State
+      #  run: terraform state rm azurerm_public_ip.gitea_pip
+      #  working-directory: terraform
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
