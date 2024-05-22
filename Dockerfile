@@ -31,6 +31,4 @@ COPY app.ini /etc/gitea/app.ini
 
 USER git
 
-WORKDIR /var/lib/gitea
-
 CMD ["gitea", "web", "-c", "/etc/gitea/app.ini"]
