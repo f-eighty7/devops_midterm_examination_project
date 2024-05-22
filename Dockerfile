@@ -22,14 +22,12 @@ RUN adduser \
     --home /home/git \
     git
 
-
-RUN mkdir -p /var/lib/gitea/data && \
-    chown -R git:git /var/lib/gitea/data && \
-    chmod -R 750 /var/lib/gitea/data && \
+RUN mkdir -p /var/lib/gitea/{custom,data,log} && \
+    chown -R git:git /var/lib/gitea/ && \
+    chmod -R 750 /var/lib/gitea/ && \
     mkdir /etc/gitea && \
     chown root:git /etc/gitea && \
     chmod 770 /etc/gitea
-
 
 COPY app.ini /etc/gitea/app.ini
 
