@@ -39,5 +39,7 @@ jobs:
         working-directory: terraform
 
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+        run: |
+          terraform state mv azurerm_public_ip.gitea_pip /state/azurerm_public_ip.gitea_pip
+          terraform destroy -auto-approve
         working-directory: terraform
