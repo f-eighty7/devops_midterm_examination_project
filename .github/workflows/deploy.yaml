@@ -32,19 +32,7 @@ jobs:
 
     - name: Terraform Init
       run: terraform init -backend-config="token=${{ secrets.TF_API_TOKEN }}"
-      working-directory: terraform
-
-    - name: Import Public IP to State
-      run: |
-        if terraform state show azurerm_public_ip.gitea_pip &> /dev/null; then
-          terraform import azurerm_public_ip.gitea_pip /subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Network/publicIPAddresses/<public_ip_name>
-        else
-          echo "Public IP resource not found in state. Skipping import."
-        fi
-      working-directory: terraform
-      shell: bash
-    
-    
+      working-directory: terraform 
     
     - name: Apply Terraform configuration
       env:
