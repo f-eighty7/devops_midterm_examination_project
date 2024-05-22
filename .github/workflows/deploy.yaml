@@ -36,6 +36,7 @@ jobs:
     
     - name: Download Terraform state
       run: |
+        cd terraform
         curl -o terraform.tfstate "https://app.terraform.io/api/state-versions/sv-8MYQLFfY894y9hUJ/hosted_state"
       if: always()
 
