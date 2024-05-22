@@ -19,19 +19,19 @@ RUN adduser \
     --gecos 'Git Version Control' \
     --group \
     --disabled-password \
-    --home /home/git \
-    git
+    --home /home/ak \
+    ak
 
 RUN mkdir -p /var/lib/gitea/{custom,data,log} && \
-    chown -R git:git /var/lib/gitea/ && \
+    chown -R ak:ak /var/lib/gitea/ && \
     chmod -R 750 /var/lib/gitea/ && \
     mkdir /etc/gitea && \
-    chown root:git /etc/gitea && \
+    chown root:ak /etc/gitea && \
     chmod 770 /etc/gitea
 
 COPY app.ini /etc/gitea/app.ini
 
-USER git
+USER ak
 
 WORKDIR /var/lib/gitea
 
