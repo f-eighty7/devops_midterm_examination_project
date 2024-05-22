@@ -1,4 +1,4 @@
-FROM ubuntu:20.04ex
+FROM ubuntu:20.04
 
 RUN apt-get update && \
     apt-get install -y wget git sqlite3 && \
