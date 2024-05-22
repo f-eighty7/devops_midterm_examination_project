@@ -41,8 +41,8 @@ jobs:
         else
           echo "Public IP resource not found in state. Skipping import."
         fi
-      shell: /usr/bin/bash -e {0}
       working-directory: terraform
+      shell: /usr/bin/bash -e {0}
       env:
         TERRAFORM_CLI_PATH: /home/runner/work/_temp/bc3b34d3-03b6-468f-99d6-dc67f9488d25
     
