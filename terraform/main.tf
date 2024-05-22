@@ -60,10 +60,6 @@ resource "azurerm_network_interface" "gitea_nic" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.gitea_pip.id
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "azurerm_network_security_group" "gitea_sg" {
@@ -148,7 +144,6 @@ write_files:
   - path: /etc/nginx/sites-available/gitea
     content: |
       server {
-          listen 80;
           server_name ahin.chas.dsnw.dev;
 
           location / {
@@ -160,12 +155,9 @@ write_files:
           }
       }
 
-  - path: /etc/nginx/sites-enabled/gitea
-    content: |
-      ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/
-
 runcmd:
   - systemctl restart nginx
+  - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
 
   # Install acme.sh and obtain SSL certificate
   - curl https://get.acme.sh | sh
