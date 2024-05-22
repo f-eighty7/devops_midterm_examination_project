@@ -98,6 +98,19 @@ resource "azurerm_network_security_group" "gitea_sg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+security_rule {
+    name                       = "Gitea"
+    priority                   = 103
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3000"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+
+    }
 }
 
 resource "azurerm_linux_virtual_machine" "gitea_vm" {
