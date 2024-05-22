@@ -34,4 +34,4 @@ USER git
 
 WORKDIR /var/lib/gitea
 
-CMD ["su", "git", "gitea", "-c", "gitea web -c /etc/gitea/app.ini"]
+CMD ["gitea", "web", "-c", "/etc/gitea/app.ini"]
