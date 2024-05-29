@@ -1,5 +1,8 @@
 FROM ubuntu:20.04
 
+# Set noninteractive mode
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install required packages
 RUN apt-get update && \
     apt-get install -y wget git sqlite3 nginx certbot python3-certbot-nginx && \
