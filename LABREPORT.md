@@ -78,13 +78,14 @@ INSTALL_LOCK = true
 ```
 ---
 **2. **Creating Docker Image and Pushing to Repository:**
-   - GitHub Actions Workflow:
-     - Before using the workflow can be used, set a secret named the `DOCKER_TOKEN` in the GitHub repository settings. and then also set these secrets(this are provided by Azure subscription):
-       - `ARM_CLIENT_ID`
-       - `CLIENT_SECRET`
-       - `ARM_SUBSCRIPTION_ID`
-       - `ARM_TENANT_ID`
-     - dditionally, ensure that the SSH public key (`SSH_PUBLIC_KEY`) secret is created in the repository settings. This key will be used for SSH authentication to the Azure VM.
+
+- Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
+  - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
+  - `ARM_CLIENT_ID`: Provided by the Azure subscription.
+  - `CLIENT_SECRET`: Also provided by the Azure subscription.
+  - `ARM_SUBSCRIPTION_ID`: Another essential Azure subscription credential.
+  - `ARM_TENANT_ID`: Yet another Azure subscription credential.
+- Additionally, generate an SSH key pair and place the public key in the `SSH_PUBLIC_KEY` secret within the repository settings.
 
 GitHub Actions Workflow:
 ```yaml
@@ -372,4 +373,3 @@ jobs:
 **Conclusion**
 
 I've established a Docker image housing the Gitea application binary and automated the deployment process using Terraform for infrastructure provisioning and Cloud-init for configuration. Additionally, I've implemented a workflow to automatically deploy the Terraform infrastructure, streamlining the deployment of Gitea in Azure (Ofcourse you can just apply terraform locally and have everything setup.) With this setup, it's possible to reboot the VM and retain access to Gitea without any manual intervention. The automated deployment process ensures that the necessary configurations persist even after a reboot, allowing users to seamlessly log in and access Gitea without interruption.
-
