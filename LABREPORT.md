@@ -1,5 +1,5 @@
 **Documentation: Setup Gitea in Azure with some nice DevOps tools!**
-
+---
 **1. Creating Dockerfile and app.ini:**
 
 **Dockerfile:**
@@ -76,8 +76,15 @@ ROOT_PATH = /var/lib/gitea/log
 [security]
 INSTALL_LOCK = true
 ```
-
-**2. Creating Docker Image and Pushing to Repository:**
+---
+**2. **Creating Docker Image and Pushing to Repository:**
+   - GitHub Actions Workflow:
+     - Before using the workflow can be used, set a secret named the `DOCKER_TOKEN` in the GitHub repository settings. and then also set these secrets(this are provided by Azure subscription):
+       - `ARM_CLIENT_ID`
+       - `CLIENT_SECRET`
+       - `ARM_SUBSCRIPTION_ID`
+       - `ARM_TENANT_ID`
+     - dditionally, ensure that the SSH public key (`SSH_PUBLIC_KEY`) secret is created in the repository settings. This key will be used for SSH authentication to the Azure VM.
 
 GitHub Actions Workflow:
 ```yaml
@@ -117,6 +124,27 @@ jobs:
           repository: f-eighty7/devops_midterm_examination_project
           event-type: deploy-gitea
 ```
+---
+
+4. **Configuring Remote Backend:**
+Before applying the Terraform configuration, a remote setup of the tfstate is needed. Follow these steps to configure the remote backend:
+
+- **Access Terraform Cloud:**
+   - Log in or create a Terraform Cloud account at [app.terraform.io](https://app.terraform.io).
+
+- **Create an Organization:**
+   - Create an organization called ak-gitea.
+
+- **Create a Workspace:**
+   - Inside the organization, create a new workspace and pick "API-Driven Workflo". Then name it "gitea".
+
+- **Choose Execution Mode:**
+   - After creating the workspace, navigate to its settings within Terraform Cloud.
+   - In the workspace settings, locate the "Execution Mode" section.
+   - Choose "Local" as the execution mode to instruct Terraform Cloud to execute Terraform operations locally on your workstation rather than on Terraform Cloud agents.
+   - Save the settings to apply the changes.
+
+By selecting the "Local" execution mode, Terraform operations will be executed on github runners machine.
 
 **3. Create an VM and pull the Gitea Docker image with cloud-config(plus Nginx configuration and SSL Certification with Certbot)**
 
@@ -344,3 +372,4 @@ jobs:
 **Conclusion**
 
 I've established a Docker image housing the Gitea application binary and automated the deployment process using Terraform for infrastructure provisioning and Cloud-init for configuration. Additionally, I've implemented a workflow to automatically deploy the Terraform infrastructure, streamlining the deployment of Gitea in Azure (Ofcourse you can just apply terraform locally and have everything setup.) With this setup, it's possible to reboot the VM and retain access to Gitea without any manual intervention. The automated deployment process ensures that the necessary configurations persist even after a reboot, allowing users to seamlessly log in and access Gitea without interruption.
+
