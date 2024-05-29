@@ -136,7 +136,7 @@ packages:
   - docker.io
   - nginx
   - curl
-  - socat
+  - socat  # added socat package as recommended by acme.sh
 
 write_files:
   - path: /etc/nginx/sites-available/gitea
@@ -154,19 +154,20 @@ write_files:
       }
 
 runcmd:
-  - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
   - systemctl restart nginx
+  - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
 
+  # Install acme.sh and obtain SSL certificate
   - curl https://get.acme.sh | sh
-  - chmod +x /root/.acme.sh/acme.sh
-  - ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+  - export PATH="/root/.acme.sh:$PATH"
   - /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
   - /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
       --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
       --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
       --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
       --reloadcmd "systemctl restart nginx"
-      
+
+  # Start Docker and run Gitea container
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
