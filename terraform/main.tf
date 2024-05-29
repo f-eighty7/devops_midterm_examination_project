@@ -141,9 +141,9 @@ packages:
 runcmd:
   - systemctl start docker
   - systemctl enable docker
-  - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-
+  - docker volume create gitea_data  # Create a named volume for Gitea data persistence
+  - docker run -d --name gitea -p 3000:3000 -p 222:22 -v gitea_data:/data ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+  
   # Configure Nginx
   - echo "server {
         listen 80;
