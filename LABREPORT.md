@@ -134,7 +134,7 @@ Before applying the Terraform configuration, a remote setup of the tfstate is ne
    - Log in or create a Terraform Cloud account at [app.terraform.io](https://app.terraform.io).
 
 - **Create an Organization:**
-   - Create an organization called ak-gitea.
+   - Create an organization called "ak-gitea".
 
 - **Create a Workspace:**
    - Inside the organization, create a new workspace and pick "API-Driven Workflo". Then name it "gitea".
