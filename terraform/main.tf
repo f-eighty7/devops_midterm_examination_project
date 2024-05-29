@@ -134,12 +134,35 @@ package_update: true
 package_upgrade: true
 packages:
   - docker.io
+  - nginx
+  - certbot
+  - python3-certbot-nginx
 
 runcmd:
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 80:80 -p 443:443 -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+
+  # Configure Nginx
+  - echo "server {
+        listen 80;
+        server_name ahin.chas.dsnw.dev;
+
+        location / {
+            proxy_pass http://localhost:3000;
+            proxy_set_header Host \$host;
+            proxy_set_header X-Real-IP \$remote_addr;
+            proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto \$scheme;
+        }
+    }" > /etc/nginx/sites-available/gitea
+
+  - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/
+  - systemctl restart nginx
+
+  # Obtain SSL/TLS certificate
+  - certbot --nginx --non-interactive --agree-tos -d ahin.chas.dsnw.dev -m ahin.khan1@gmail.com
 EOF
   )
 }
