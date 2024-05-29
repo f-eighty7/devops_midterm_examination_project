@@ -32,6 +32,8 @@ RUN mkdir -p /usr/local/bin/data && \
     chown -R git:git /usr/local/bin/data && \
     chmod -R 750 /usr/local/bin/data
 
+VOLUME /var/lib/gitea
+
 COPY app.ini /etc/gitea/app.ini
 
 RUN chown git:git /etc/gitea/app.ini && chmod 660 /etc/gitea/app.ini

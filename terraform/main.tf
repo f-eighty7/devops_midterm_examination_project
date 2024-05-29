@@ -139,10 +139,15 @@ packages:
   - python3-certbot-nginx
 
 runcmd:
+  # Start and enable Docker service
   - systemctl start docker
   - systemctl enable docker
+
+  # Pull the Gitea Docker image
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+
+  # Run the Gitea Docker container with restart policy and volume mount
+ - docker run -d --restart unless-stopped --name gitea -p 3000:3000 -p 222:22 -v /root/gitea-data:/var/lib/gitea ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
 
   # Configure Nginx
   - echo "server {
