@@ -158,11 +158,12 @@ write_files:
       #!/bin/bash
       echo "Installing acme.sh" | tee -a /root/acme-setup.log
       curl https://get.acme.sh | sh >> /root/acme-setup.log 2>&1
-      export PATH="/root/.acme.sh:$PATH" >> /root/acme-setup.log 2>&1
+      echo "source /.acme.sh/acme.sh.env" >> /root/.bashrc
+      source /root/.bashrc >> /root/acme-setup.log 2>&1
       echo "Issuing certificate" | tee -a /root/acme-setup.log
-      /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev >> /root/acme-setup.log 2>&1
+      /.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev >> /root/acme-setup.log 2>&1
       echo "Installing certificate" | tee -a /root/acme-setup.log
-      /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+      /.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
         --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
         --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
         --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
