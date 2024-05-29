@@ -146,10 +146,10 @@ write_files:
 
           location / {
               proxy_pass http://localhost:3000;
-              proxy_set_header Host \$host;
-              proxy_set_header X-Real-IP \$remote_addr;
-              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto \$scheme;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
           }
       }
   - path: /root/setup-acme.sh
@@ -158,16 +158,14 @@ write_files:
       #!/bin/bash
       echo "Installing acme.sh"
       curl https://get.acme.sh | sh
-      echo "source /.acme.sh/acme.sh.env" >> /root/.bashrc
-      source /root/.bashrc
       echo "Issuing certificate"
-      /.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
+      /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
       echo "Installing certificate"
       mkdir -p /etc/letsencrypt  # Ensure directory exists
-      /.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
-        --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
+      /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+        --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.cer \
         --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
-        --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
+        --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.cer \
         --reloadcmd "systemctl restart nginx"
 
 runcmd:
