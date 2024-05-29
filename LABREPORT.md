@@ -128,7 +128,7 @@ jobs:
 ---
 
 4. **Configuring Remote Backend:**
-Before applying the Terraform configuration, a remote setup of the tfstate is needed. Follow these steps to configure the remote backend:
+Before applying the Terraform configuration, a remote setup for the tfstate is needed. Follow these steps to configure the remote backend:
 
 - **Access Terraform Cloud:**
    - Log in or create a Terraform Cloud account at [app.terraform.io](https://app.terraform.io).
