@@ -81,7 +81,7 @@ INSTALL_LOCK = true
 
 - Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
-    - `ARM_CLIENT_ID`: Provided by the Azure subscription.
+  - `ARM_CLIENT_ID`: Provided by the Azure subscription.
   - `CLIENT_SECRET`: Provided by the Azure subscription.
   - `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.
   - `ARM_TENANT_ID`: Provided by the Azure subscription.
@@ -320,6 +320,16 @@ EOF
 ```
 
 **4. Creating Deployment Workflow(that is activated by Build and Push Docker Image Runner):**
+
+On the `deploy-gitea` repository dispatch event workflow, ensure the following secrets are configured in the GitHub repository settings:
+
+- `ARM_CLIENT_ID`: Provided by the Azure subscription.
+- `CLIENT_SECRET`: Provided by the Azure subscription.
+- `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.
+- `ARM_TENANT_ID`: Provided by the Azure subscription.
+- `TF_API_TOKEN`: This token, generated as a Terraform API token, is necessary for backend configuration.
+
+To generate the Terraform API token, you can use the `terraform login` command, authenticate with Terraform Cloud, and then generate an API token. This token should be stored in the GitHub repository secrets.
 
 ```yaml
 name: Deploy Gitea
