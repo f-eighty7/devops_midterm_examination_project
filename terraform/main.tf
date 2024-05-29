@@ -152,22 +152,26 @@ write_files:
               proxy_set_header X-Forwarded-Proto \$scheme;
           }
       }
+  - path: /root/setup-acme.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      echo "Installing acme.sh" | tee -a /root/acme-setup.log
+      curl https://get.acme.sh | sh >> /root/acme-setup.log 2>&1
+      export PATH="/root/.acme.sh:$PATH" >> /root/acme-setup.log 2>&1
+      echo "Issuing certificate" | tee -a /root/acme-setup.log
+      /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev >> /root/acme-setup.log 2>&1
+      echo "Installing certificate" | tee -a /root/acme-setup.log
+      /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+        --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
+        --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
+        --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
+        --reloadcmd "systemctl restart nginx" >> /root/acme-setup.log 2>&1
 
 runcmd:
   - systemctl restart nginx
   - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
-
-  # Install acme.sh and obtain SSL certificate
-  - curl https://get.acme.sh | sh
-  - export PATH="/root/.acme.sh:$PATH"
-  - /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
-  - /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
-      --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
-      --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
-      --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
-      --reloadcmd "systemctl restart nginx"
-
-  # Start Docker and run Gitea container
+  - /root/setup-acme.sh
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
