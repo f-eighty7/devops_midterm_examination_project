@@ -136,7 +136,7 @@ packages:
   - docker.io
   - nginx
   - curl
-  - socat  # added socat package as recommended by acme.sh
+  - socat
 
 write_files:
   - path: /etc/nginx/sites-available/gitea
@@ -146,28 +146,27 @@ write_files:
 
           location / {
               proxy_pass http://localhost:3000;
-              proxy_set_header Host $host;
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto $scheme;
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
           }
       }
 
 runcmd:
-  - systemctl restart nginx
   - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
+  - systemctl restart nginx
 
-  # Install acme.sh and obtain SSL certificate
   - curl https://get.acme.sh | sh
+  - chmod +x /root/.acme.sh/acme.sh
   - ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
-  - /usr/local/bin/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
-  - /usr/local/bin/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+  - /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
+  - /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
       --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
       --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
       --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \
       --reloadcmd "systemctl restart nginx"
-
-  # Start Docker and run Gitea container
+      
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
