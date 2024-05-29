@@ -145,7 +145,6 @@ runcmd:
   - docker run -d --name gitea -p 3000:3000 -p 222:22 -v gitea_data:/data --restart always ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
 
 
-  # Configure Nginx
   - echo "server {
         listen 80;
         server_name ahin1.chas.dsnw.dev;
@@ -162,7 +161,6 @@ runcmd:
   - ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/
   - systemctl restart nginx
 
-  # Obtain SSL/TLS certificate
   - certbot --nginx --non-interactive --agree-tos -d ahin1.chas.dsnw.dev -m ahin.khan1@gmail.com
 EOF
   )

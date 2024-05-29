@@ -24,3 +24,11 @@ jobs:
                 docker tag $DOCKER_IMAGE ghcr.io/$REPO_NAME/gitea:latest
                 docker push $DOCKER_IMAGE
                 docker push ghcr.io/$REPO_NAME/gitea:latest
+
+            - name: Trigger Deployment Workflow
+              if: always()
+              uses: peter-evans/repository-dispatch@v3
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                repository: f-eighty7/devops_midterm_examination_project
+                event-type: deploy-gitea

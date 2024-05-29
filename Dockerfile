@@ -27,7 +27,7 @@ RUN mkdir -p /var/lib/gitea/{custom,data,log,repositories} && \
     chown root:git /etc/gitea && \
     chmod 770 /etc/gitea
 
-# Create the /usr/local/bin/data directory and give git user ownership
+
 RUN mkdir -p /usr/local/bin/data && \
     chown -R git:git /usr/local/bin/data && \
     chmod -R 750 /usr/local/bin/data

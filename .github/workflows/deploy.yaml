@@ -1,7 +1,8 @@
 name: Deploy Gitea
 
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [deploy-gitea]
 
 jobs:
   deploy:
@@ -22,7 +23,7 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: Create SSH directory if not exists
+    - name: Create and setup SSH key/directory if not exists
       run: mkdir -p $HOME/.ssh
 
     - name: Set up SSH key
