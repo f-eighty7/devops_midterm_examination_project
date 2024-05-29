@@ -159,10 +159,10 @@ write_files:
       echo "Installing acme.sh"
       curl https://get.acme.sh | sh
       echo "Issuing certificate"
-      /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
+      ~/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
       echo "Installing certificate"
       mkdir -p /etc/letsencrypt  # Ensure directory exists
-      /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+      ~/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
         --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.cer \
         --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
         --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.cer \
