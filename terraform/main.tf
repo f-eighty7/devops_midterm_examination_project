@@ -148,7 +148,7 @@ runcmd:
   # Configure Nginx
   - echo "server {
         listen 80;
-        server_name ahin.chas.dsnw.dev;
+        server_name ahin1.chas.dsnw.dev;
 
         location / {
             proxy_pass http://localhost:3000;
