@@ -163,7 +163,7 @@ runcmd:
   - systemctl restart nginx
 
   # Obtain SSL/TLS certificate
-  - certbot --nginx --non-interactive --agree-tos -d ahin.chas.dsnw.dev -m ahin.khan1@gmail.com
+  - certbot --nginx --non-interactive --agree-tos -d ahin1.chas.dsnw.dev -m ahin.khan1@gmail.com
 EOF
   )
 }
