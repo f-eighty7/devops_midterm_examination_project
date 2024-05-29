@@ -137,12 +137,12 @@ Before applying the Terraform configuration, a remote setup for the tfstate is n
    - Create an organization called "ak-gitea".
 
 - **Create a Workspace:**
-   - Inside the organization, create a new workspace and pick "API-Driven Workflo". Then name it "gitea".
+   - Inside the organization, create a new workspace and pick "API-Driven Workflow". Then name it "gitea".
 
 - **Choose Execution Mode:**
-   - After creating the workspace, navigate to its settings within Terraform Cloud.
+   - After creating the workspace, navigate to its settings.
    - In the workspace settings, locate the "Execution Mode" section.
-   - Choose "Local" as the execution mode to instruct Terraform Cloud to execute Terraform operations locally on your workstation rather than on Terraform Cloud agents.
+   - Choose "Local" as the execution mode.
    - Save the settings to apply the changes.
 
 By selecting the "Local" execution mode, Terraform operations will be executed on github runners machine.
