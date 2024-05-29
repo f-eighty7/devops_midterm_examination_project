@@ -139,7 +139,7 @@ runcmd:
   - systemctl start docker
   - systemctl enable docker
   - docker pull ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
-  - docker run -d --name gitea -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
+  - docker run -d --name gitea -p 80:80 -p 443:443 -p 3000:3000 -p 222:22 ghcr.io/f-eighty7/devops_midterm_examination_project/gitea:latest
 EOF
   )
 }
