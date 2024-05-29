@@ -136,6 +136,7 @@ packages:
   - docker.io
   - nginx
   - curl
+  - socat  # added socat package as recommended by acme.sh
 
 write_files:
   - path: /etc/nginx/sites-available/gitea
@@ -158,8 +159,9 @@ runcmd:
 
   # Install acme.sh and obtain SSL certificate
   - curl https://get.acme.sh | sh
-  - /root/.acme.sh/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
-  - /root/.acme.sh/acme.sh --install-cert -d ahin.chas.dsnw.dev \
+  - ln -s /root/.acme.sh/acme.sh /usr/local/bin/acme.sh
+  - /usr/local/bin/acme.sh --issue --nginx -d ahin.chas.dsnw.dev
+  - /usr/local/bin/acme.sh --install-cert -d ahin.chas.dsnw.dev \
       --cert-file /etc/letsencrypt/ahin.chas.dsnw.dev.crt \
       --key-file /etc/letsencrypt/ahin.chas.dsnw.dev.key \
       --fullchain-file /etc/letsencrypt/ahin.chas.dsnw.dev.fullchain.pem \

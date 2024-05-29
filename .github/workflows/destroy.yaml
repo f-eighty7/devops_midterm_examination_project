@@ -1,4 +1,4 @@
-name: Destroy Gitea Infrastructure
+name: Destroy Gitea VM
 
 on:
   workflow_dispatch:
