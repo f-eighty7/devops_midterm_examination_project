@@ -81,11 +81,11 @@ INSTALL_LOCK = true
 
 - Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
-  - `ARM_CLIENT_ID`: Provided by the Azure subscription.
-  - `CLIENT_SECRET`: Also provided by the Azure subscription.
-  - `ARM_SUBSCRIPTION_ID`: Another essential Azure subscription credential.
-  - `ARM_TENANT_ID`: Yet another Azure subscription credential.
-- Additionally, generate an SSH key pair and place the public key in the `SSH_PUBLIC_KEY` secret within the repository settings.
+    - `ARM_CLIENT_ID`: Provided by the Azure subscription.
+  - `CLIENT_SECRET`: Provided by the Azure subscription.
+  - `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.
+  - `ARM_TENANT_ID`: Provided by the Azure subscription.
+- Additionally, generate an SSH key pair and place the public key and name it `SSH_PUBLIC_KEY` within the repository secret settings.
 
 GitHub Actions Workflow:
 ```yaml
