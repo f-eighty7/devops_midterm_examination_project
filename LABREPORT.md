@@ -118,7 +118,7 @@ jobs:
           event-type: deploy-gitea
 ```
 
-**3. Create an VM and pull the Gitea Docker image with cloud-config(plus SSL Certification with Certbot)**
+**3. Create an VM and pull the Gitea Docker image with cloud-config(plus Nginx configuration and SSL Certification with Certbot)**
 
 ```hcl
 terraform {
@@ -343,5 +343,4 @@ jobs:
 
 **Conclusion**
 
-I've established a Docker image housing the Gitea application binary and automated the deployment process using Terraform for infrastructure provisioning and Cloud-init for configuration. Additionally, I've implemented a workflow to automatically deploy the Terraform infrastructure, streamlining the deployment of Gitea in Azure.
-With this setup, it's possible to reboot the VM and retain access to Gitea without any manual intervention. The automated deployment process ensures that the necessary configurations persist even after a reboot, allowing users to seamlessly log in and access Gitea without interruption.
+I've established a Docker image housing the Gitea application binary and automated the deployment process using Terraform for infrastructure provisioning and Cloud-init for configuration. Additionally, I've implemented a workflow to automatically deploy the Terraform infrastructure, streamlining the deployment of Gitea in Azure (Ofcourse you can just apply terraform locally and have everything setup.) With this setup, it's possible to reboot the VM and retain access to Gitea without any manual intervention. The automated deployment process ensures that the necessary configurations persist even after a reboot, allowing users to seamlessly log in and access Gitea without interruption.
