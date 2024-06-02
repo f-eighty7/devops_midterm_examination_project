@@ -157,7 +157,7 @@ By selecting the "Local" execution mode, Terraform operations will be executed o
 
 **4. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
 
-After successfully deploying Terraform, Gitea can be accessed via the URL `ahin1.chas.dsnw.dev`. Please note that you may need to update the DNS name as it is currently in use and also point it to the newly created host IP.
+After successfully deploying Terraform, Gitea can be accessed via the URL `ahin1.chas.dsnw.dev`. Note that you may need to update the DNS name as it is currently in use and also point it to the newly created host IP.
 
 **main.tf**
 ```hcl
