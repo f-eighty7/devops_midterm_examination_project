@@ -77,11 +77,11 @@ ROOT_PATH = /var/lib/gitea/log
 INSTALL_LOCK = true
 ```
 ---
-**2. **Create Docker image and push to Repository with Github Actions:**
+**2. Create Docker image and push to Repository with Github Actions:**
 
 Create a `.github/workflows` folder in the root directory and put the workflow files in there.
 
-Before utilizing this GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
+Before utilizing this GitHub Actions Workflow, put the following secrets are configured in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
   - `ARM_CLIENT_ID`: Provided by the Azure subscription.
   - `CLIENT_SECRET`: Provided by the Azure subscription.
@@ -89,7 +89,7 @@ Before utilizing this GitHub Actions Workflow, ensure the following secrets are 
   - `ARM_TENANT_ID`: Provided by the Azure subscription.
   - Additionally, generate an SSH key pair and place the public key and name it `SSH_PUBLIC_KEY` within the repository secret settings.
 
-GitHub Actions Workflow:
+**docker-image.yaml:**
 ```yaml
 name: Build and Push Docker Image
 
@@ -130,6 +130,7 @@ jobs:
 ---
 
 4. **Configuring Remote Backend:**
+
 Before applying the Terraform configuration, a remote setup for the tfstate is needed. Follow these steps to configure the remote backend:
 
 - **Access Terraform Cloud:**
@@ -149,10 +150,11 @@ Before applying the Terraform configuration, a remote setup for the tfstate is n
 
 By selecting the "Local" execution mode, Terraform operations will be executed on github runners machine.
 
-**3. Create an VM and pull the Gitea Docker image with cloud-config(plus Nginx configuration and SSL Certification with Certbot)**
+**3. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
 
 After a successful Terraform deployment, Gitea can be accessed via the URL ahin1.chas.dsnw.dev. Ensure that the DNS is correctly configured to point to the public IP address of the deployed Azure VM.
 
+**main.tf**
 ```hcl
 terraform {
   required_providers {
@@ -323,7 +325,7 @@ EOF
 }
 ```
 
-**4. Creating Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
+**4. Create Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
 
 Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
 - `ARM_CLIENT_ID`: Provided by the Azure subscription.
@@ -332,8 +334,24 @@ Before utilizing the GitHub Actions Workflow, ensure the following secrets are c
 - `ARM_TENANT_ID`: Provided by the Azure subscription.
 - `TF_API_TOKEN`: This token, generated as a Terraform API token, is necessary for backend configuration.
 
-To generate the Terraform API token, you can use the `terraform login` command, authenticate with Terraform Cloud, and then generate an API token. This token should be stored in the GitHub repository secrets.
+To generate a Terraform API token (TF_API_TOKEN), you'll need to create an API token from Terraform Cloud.
 
+1. **Log in to Terraform Cloud**:
+   - Go to [Terraform Cloud](https://app.terraform.io/) and log in with your credentials.
+
+2. **Navigate to User Settings**:
+   - Click on your profile avatar in the top-right corner and select "User Settings" from the dropdown menu.
+
+3. **Generate a New API Token**:
+   - In the "User Settings" page, find the "Tokens" section.
+   - Click on "Create an API token".
+   - Name it "Github Actions".
+   - Click the "Create API Token" button.
+
+4. **Copy the Token**:
+   - After creation, the token will be displayed only once. Copy it and store it in Github repository secrets, as you won't be able to view it again.
+
+**deploy.yaml**
 ```yaml
 name: Deploy Gitea
 
