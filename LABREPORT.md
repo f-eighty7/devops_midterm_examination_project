@@ -151,6 +151,7 @@ Before applying the Terraform configuration, a remote setup for the tfstate is n
    - Save the settings to apply the changes.
 
 By selecting the "Local" execution mode, Terraform operations will be executed on github runners machine.
+
 ---
 
 **4. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
