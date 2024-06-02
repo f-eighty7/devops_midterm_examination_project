@@ -2,7 +2,7 @@
 - Gitea: https://ahin1.chas.dsnw.dev 
 - Github repo:https://github.com/f-eighty7/devops_midterm_examination_project/
 ---
-**1. Creating Dockerfile and app.ini:**
+**1. Create Dockerfile and app.ini:**
 
 **Dockerfile:**
 ```Dockerfile
@@ -77,9 +77,10 @@ ROOT_PATH = /var/lib/gitea/log
 INSTALL_LOCK = true
 ```
 ---
-**2. **Creating Docker Image and Pushing to Repository with Github Actions:**
+**2. **Create Docker image and push to Repository with Github Actions:**
 
 Create a `.github/workflows` folder in the root directory and put the workflow files in there.
+
 Before utilizing this GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
   - `ARM_CLIENT_ID`: Provided by the Azure subscription.
