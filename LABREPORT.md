@@ -1,5 +1,5 @@
 **Documentation: Setup Gitea in Azure with some nice DevOps tools!**
-Gitea: https://ahin1.chas.dsnw.dev Github:https://github.com/f-eighty7/devops_midterm_examination_project/
+Gitea: https://ahin1.chas.dsnw.dev Github repo:https://github.com/f-eighty7/devops_midterm_examination_project/
 ---
 **1. Creating Dockerfile and app.ini:**
 
@@ -75,18 +75,20 @@ LEVEL = Info
 ROOT_PATH = /var/lib/gitea/log
 
 [security]
+# Skip setup page
 INSTALL_LOCK = true
 ```
 ---
-**2. **Creating Docker Image and Pushing to Repository:**
+**2. **Creating Docker Image and Pushing to Repository with Github Actions:**
 
-- Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
+Create a `.github/workflows` folder in the root directory and put the workflow files in there.
+Before utilizing this GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
   - `ARM_CLIENT_ID`: Provided by the Azure subscription.
   - `CLIENT_SECRET`: Provided by the Azure subscription.
   - `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.
   - `ARM_TENANT_ID`: Provided by the Azure subscription.
-- Additionally, generate an SSH key pair and place the public key and name it `SSH_PUBLIC_KEY` within the repository secret settings.
+  - Additionally, generate an SSH key pair and place the public key and name it `SSH_PUBLIC_KEY` within the repository secret settings.
 
 GitHub Actions Workflow:
 ```yaml
@@ -322,10 +324,9 @@ EOF
 }
 ```
 
-**4. Creating Deployment Workflow(that is activated by Build and Push Docker Image Runner):**
+**4. Creating Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
 
-On the `deploy-gitea` repository dispatch event workflow, ensure the following secrets are configured in the GitHub repository settings:
-
+Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
 - `ARM_CLIENT_ID`: Provided by the Azure subscription.
 - `CLIENT_SECRET`: Provided by the Azure subscription.
 - `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.

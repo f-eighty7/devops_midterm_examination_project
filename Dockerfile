@@ -8,9 +8,6 @@ RUN apt-get update && \
 RUN wget -O /usr/local/bin/gitea https://dl.gitea.io/gitea/1.22/gitea-1.22-linux-amd64 && \
     chmod +x /usr/local/bin/gitea
 
-EXPOSE 3000
-EXPOSE 22
-
 RUN adduser \
     --system \
     --shell /bin/bash \
