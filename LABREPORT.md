@@ -2,6 +2,7 @@
 - Gitea: https://ahin1.chas.dsnw.dev 
 - Github repo:https://github.com/f-eighty7/devops_midterm_examination_project/
 ---
+
 **1. Create Dockerfile and app.ini:**
 
 **Dockerfile:**
@@ -77,6 +78,7 @@ ROOT_PATH = /var/lib/gitea/log
 INSTALL_LOCK = true
 ```
 ---
+
 **2. Create Docker image and push to Repository with Github Actions:**
 
 Create a `.github/workflows` folder in the root directory and put the workflow files in there.
@@ -129,7 +131,7 @@ jobs:
 ```
 ---
 
-4. **Configuring Remote Backend:**
+**3. Configuring Remote Backend:**
 
 Before applying the Terraform configuration, a remote setup for the tfstate is needed. Follow these steps to configure the remote backend:
 
@@ -149,8 +151,9 @@ Before applying the Terraform configuration, a remote setup for the tfstate is n
    - Save the settings to apply the changes.
 
 By selecting the "Local" execution mode, Terraform operations will be executed on github runners machine.
+---
 
-**3. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
+**4. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
 
 After successfully deploying Terraform, Gitea can be accessed via the URL `ahin1.chas.dsnw.dev`. Please note that you may need to update the DNS name as it is currently in use and also point it to the newly created host IP.
 
@@ -324,8 +327,9 @@ EOF
   )
 }
 ```
+---
 
-**4. Create Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
+**5. Create Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
 
 Before utilizing the GitHub Actions Workflow, put the following secrets are in the GitHub repository settings:
 - `ARM_CLIENT_ID`: Provided by the Azure subscription.
