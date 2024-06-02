@@ -346,7 +346,7 @@ To generate a Terraform API token (TF_API_TOKEN), you'll need to create an API t
    - Go to [Terraform Cloud](https://app.terraform.io/) and log in with your credentials.
 
 2. **Navigate to User Settings**:
-   - Click on your profile avatar in the top-right corner and select "User Settings" from the dropdown menu.
+   - Click on your profile avatar and select "User Settings" from the dropdown menu.
 
 3. **Generate a New API Token**:
    - In the "User Settings" page, find the "Tokens" section.
