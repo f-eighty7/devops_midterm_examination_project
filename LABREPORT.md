@@ -1,4 +1,5 @@
 **Documentation: Setup Gitea in Azure with some nice DevOps tools!**
+Gitea: https://ahin1.chas.dsnw.dev Github:https://github.com/f-eighty7/devops_midterm_examination_project/
 ---
 **1. Creating Dockerfile and app.ini:**
 
