@@ -81,7 +81,7 @@ INSTALL_LOCK = true
 
 Create a `.github/workflows` folder in the root directory and put the workflow files in there.
 
-Before utilizing this GitHub Actions Workflow, put the following secrets are configured in the GitHub repository settings:
+Before utilizing this GitHub Actions Workflow, put the following secrets in the GitHub repository settings:
   - `DOCKER_TOKEN`: This token with write and read persmission, created with your GitHub account's personal access token, is required for pushing the image to Github Docker registry.
   - `ARM_CLIENT_ID`: Provided by the Azure subscription.
   - `CLIENT_SECRET`: Provided by the Azure subscription.
@@ -152,7 +152,7 @@ By selecting the "Local" execution mode, Terraform operations will be executed o
 
 **3. Create an VM and pull the Gitea Docker image with cloud-config (plus Nginx configuration and SSL Certification with Certbot)**
 
-After a successful Terraform deployment, Gitea can be accessed via the URL ahin1.chas.dsnw.dev. Ensure that the DNS is correctly configured to point to the public IP address of the deployed Azure VM.
+After successfully deploying Terraform, Gitea can be accessed via the URL `ahin1.chas.dsnw.dev`. Please note that you may need to update the DNS name as it is currently in use and also point it to the newly created host IP.
 
 **main.tf**
 ```hcl
@@ -327,7 +327,7 @@ EOF
 
 **4. Create Deployment Workflow(that is activated by Build and Push Docker Image Runner or manually):**
 
-Before utilizing the GitHub Actions Workflow, ensure the following secrets are configured in the GitHub repository settings:
+Before utilizing the GitHub Actions Workflow, put the following secrets are in the GitHub repository settings:
 - `ARM_CLIENT_ID`: Provided by the Azure subscription.
 - `CLIENT_SECRET`: Provided by the Azure subscription.
 - `ARM_SUBSCRIPTION_ID`: Provided by the Azure subscription.
